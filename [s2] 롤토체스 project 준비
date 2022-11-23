@@ -1,0 +1,141 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyMJv1WNyCRgN/Dc/ExfFETa",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/ysooch0819/AI16-Projects/blob/main/%5Bs2%5D%20%EB%A1%A4%ED%86%A0%EC%B2%B4%EC%8A%A4%20project%20%EC%A4%80%EB%B9%84\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "def getAPIkey():\n",
+        "    f = open('./riot_api.txt', 'r')\n",
+        "    return f.read()"
+      ],
+      "metadata": {
+        "id": "hcKsRVLkjkk8"
+      },
+      "execution_count": 9,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 8,
+      "metadata": {
+        "id": "N50qm7rqfDcF"
+      },
+      "outputs": [],
+      "source": [
+        "import pandas as pd\n",
+        "import requests\n",
+        "import time\n",
+        "from urllib import parse\n",
+        "import json\n",
+        "from pandas import json_normalize"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "api_key = getAPIkey()\n",
+        "# api_key = 'RGAPI-acd74d34-32bd-4176-8337-45ac9dc8b78f'\n",
+        "username = '돈까스사주세요'"
+      ],
+      "metadata": {
+        "id": "gcSYJP5CjwHl"
+      },
+      "execution_count": 16,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "def league_summoner(key, tier, country='kr',):\n",
+        "    request =requests.get(f'https://{country}.api.riotgames.com/tft/league/v1/{tier}?api_key={key}')\n",
+        "    return json.loads(request.content)"
+      ],
+      "metadata": {
+        "id": "m4OJzGVDim13"
+      },
+      "execution_count": 14,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "ch_summoner = league_summoner(api_key, tier='challenger')\n",
+        "ch_summoner"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "5pNchUaljDsH",
+        "outputId": "263f1315-291e-4c69-887f-3c0aa9ca0e58"
+      },
+      "execution_count": 15,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "{'status': {'message': 'Forbidden', 'status_code': 403}}"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 15
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "ch_summoner = json_normalize(ch_summoner['entries'])\n",
+        "ch_summoner"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 193
+        },
+        "id": "nVbUniNVj-96",
+        "outputId": "8d7968db-ae6c-48c1-885d-acb7b171f823"
+      },
+      "execution_count": 13,
+      "outputs": [
+        {
+          "output_type": "error",
+          "ename": "KeyError",
+          "evalue": "ignored",
+          "traceback": [
+            "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+            "\u001b[0;31mKeyError\u001b[0m                                  Traceback (most recent call last)",
+            "\u001b[0;32m<ipython-input-13-aa0b29be92d9>\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[0;32m----> 1\u001b[0;31m \u001b[0mch_summoner\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mjson_normalize\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mch_summoner\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;34m'entries'\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m      2\u001b[0m \u001b[0mch_summoner\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;31mKeyError\u001b[0m: 'entries'"
+          ]
+        }
+      ]
+    }
+  ]
+}
